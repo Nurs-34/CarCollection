@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import kg.surfit.carcollection.ui.home.adapters.HomeRecyclerViewAdapter
 import kg.surfit.carcollection.R
+import kg.surfit.carcollection.db.AppDatabase
 import kg.surfit.carcollection.placeholder.PlaceholderContent
 
 /**
@@ -21,6 +22,9 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val db = AppDatabase.getInstance(requireContext().applicationContext)
+        val carDao = db.carDao()
 
         arguments?.let {
             columnCount = it.getInt(ARG_COLUMN_COUNT)
