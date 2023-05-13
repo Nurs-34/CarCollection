@@ -1,4 +1,4 @@
-package kg.surfit.carcollection
+package kg.surfit.carcollection.ui.home
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -6,7 +6,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kg.surfit.carcollection.R
 import kg.surfit.carcollection.databinding.ActivityMainBinding
+import kg.surfit.carcollection.ui.home.fragments.AddCarFragment
+import kg.surfit.carcollection.ui.home.fragments.HomeFragment
+import kg.surfit.carcollection.ui.home.fragments.SettingsFragment
 
 class MainActivity : AppCompatActivity() {
 

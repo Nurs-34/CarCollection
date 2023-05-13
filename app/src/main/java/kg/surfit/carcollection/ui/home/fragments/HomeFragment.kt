@@ -1,4 +1,4 @@
-package kg.surfit.carcollection
+package kg.surfit.carcollection.ui.home.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kg.surfit.carcollection.ui.home.adapters.HomeRecyclerViewAdapter
+import kg.surfit.carcollection.R
 import kg.surfit.carcollection.placeholder.PlaceholderContent
 
 /**

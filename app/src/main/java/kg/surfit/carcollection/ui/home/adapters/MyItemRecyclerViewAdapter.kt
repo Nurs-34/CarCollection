@@ -1,10 +1,8 @@
-package kg.surfit.carcollection
+package kg.surfit.carcollection.ui.home.adapters
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 
 import kg.surfit.carcollection.placeholder.PlaceholderContent.PlaceholderItem
 import kg.surfit.carcollection.databinding.FragmentItemBinding

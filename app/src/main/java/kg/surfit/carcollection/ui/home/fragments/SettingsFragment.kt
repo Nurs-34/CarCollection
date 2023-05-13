@@ -1,4 +1,4 @@
-package kg.surfit.carcollection
+package kg.surfit.carcollection.ui.home.fragments
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kg.surfit.carcollection.R
 
 class SettingsFragment : Fragment() {
 

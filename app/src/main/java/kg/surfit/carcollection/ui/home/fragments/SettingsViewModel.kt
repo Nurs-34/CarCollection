@@ -1,4 +1,4 @@
-package kg.surfit.carcollection
+package kg.surfit.carcollection.ui.home.fragments
 
 import androidx.lifecycle.ViewModel
 
