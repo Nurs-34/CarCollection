@@ -1,6 +1,7 @@
 package kg.surfit.carcollection.ui.home.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,12 +31,14 @@ class HomeFragment : Fragment() {
         val db = AppDatabase.getInstance(requireContext().applicationContext)
         val carDao = db.carDao()
 
-        val car = Car(carName = "Моя машина", year = 2022, photo = R.drawable.ic_home_24.toString(), engineCapacity = 2.0f, dateAdded = System.currentTimeMillis())
-        lifecycleScope.launch {
-            withContext(Dispatchers.IO){
-                carDao.insertCar(car)
-            }
-        }
+//        val car = Car(carName = "Моя машина", year = 2022, photo = R.drawable.ic_home_24.toString(), engineCapacity = 2.0f, dateAdded = System.currentTimeMillis())
+//        lifecycleScope.launch {
+//            withContext(Dispatchers.IO){
+//                carDao.insertCar(car)
+//            }
+//        }
+
+
 
 
         arguments?.let {

@@ -1,9 +1,14 @@
 package kg.surfit.carcollection.ui.home.adapters
 
+import android.net.Uri
+import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
+import com.squareup.picasso.Picasso
 import kg.surfit.carcollection.databinding.FragmentItemBinding
 
 import kg.surfit.carcollection.placeholder.PlaceholderContent.PlaceholderItem
@@ -26,8 +31,7 @@ class HomeRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
-        holder.carNameView.text = item.carName
-        holder.yearView.text = item.year.toString()
+        holder.bind(item)
     }
 
     override fun getItemCount(): Int = values.size
@@ -35,6 +39,17 @@ class HomeRecyclerViewAdapter(
     inner class ViewHolder(binding: FragmentItemBinding) : RecyclerView.ViewHolder(binding.root) {
         val carNameView: TextView = binding.textViewCarName
         val yearView: TextView = binding.textViewYear
+        val imageView: ImageView = binding.imageView
+
+
+        fun bind(item: Car) {
+            carNameView.text = item.carName
+            yearView.text = item.year.toString()
+
+            Glide.with(itemView)
+                .load(item.photo)
+                .into(imageView)
+        }
     }
 
 }
