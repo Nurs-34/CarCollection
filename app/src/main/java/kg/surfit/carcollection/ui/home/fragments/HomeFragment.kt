@@ -8,10 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import kg.surfit.carcollection.ui.home.adapters.HomeRecyclerViewAdapter
 import kg.surfit.carcollection.R
 import kg.surfit.carcollection.db.AppDatabase
-import kg.surfit.carcollection.placeholder.PlaceholderContent
+import kg.surfit.carcollection.db.entity.Car
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * A fragment representing a list of Items.
@@ -26,6 +30,14 @@ class HomeFragment : Fragment() {
         val db = AppDatabase.getInstance(requireContext().applicationContext)
         val carDao = db.carDao()
 
+        val car = Car(carName = "Моя машина", year = 2022, photo = R.drawable.ic_home_24.toString(), engineCapacity = 2.0f, dateAdded = System.currentTimeMillis())
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO){
+                carDao.insertCar(car)
+            }
+        }
+
+
         arguments?.let {
             columnCount = it.getInt(ARG_COLUMN_COUNT)
         }
@@ -37,17 +49,27 @@ class HomeFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
-        // Set the adapter
-        if (view is RecyclerView) {
-            with(view) {
-                layoutManager = when {
-                    columnCount <= 1 -> LinearLayoutManager(context)
-                    else -> GridLayoutManager(context, columnCount)
-                }
-                adapter = HomeRecyclerViewAdapter(PlaceholderContent.ITEMS)
-            }
+        val recyclerView = view.findViewById<RecyclerView>(R.id.list)
+        val layoutManager = when {
+            columnCount <= 1 -> LinearLayoutManager(context)
+            else -> GridLayoutManager(context, columnCount)
         }
+        recyclerView.layoutManager = layoutManager
+
+        val db = AppDatabase.getInstance(requireContext().applicationContext)
+        val carDao = db.carDao()
+
+        lifecycleScope.launch {
+            val cars = withContext(Dispatchers.IO){
+                carDao.getAllCars()
+            }
+            val adapter = HomeRecyclerViewAdapter(cars)
+            recyclerView.adapter = adapter
+
+        }
+
         return view
+
     }
 
     companion object {

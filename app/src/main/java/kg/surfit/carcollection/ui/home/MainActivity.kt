@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.room.Room
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kg.surfit.carcollection.R
 import kg.surfit.carcollection.databinding.ActivityMainBinding
+import kg.surfit.carcollection.db.AppDatabase
 import kg.surfit.carcollection.ui.home.fragments.AddCarFragment
 import kg.surfit.carcollection.ui.home.fragments.HomeFragment
 import kg.surfit.carcollection.ui.home.fragments.SettingsFragment
