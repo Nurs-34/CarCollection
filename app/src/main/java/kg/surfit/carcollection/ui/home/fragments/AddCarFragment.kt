@@ -15,6 +15,7 @@ import kg.surfit.carcollection.R
 import kg.surfit.carcollection.databinding.FragmentAddCarBinding
 import kg.surfit.carcollection.db.AppDatabase
 import kg.surfit.carcollection.db.entity.Car
+import kg.surfit.carcollection.utils.SubCounter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -43,11 +44,15 @@ class AddCarFragment : Fragment() {
             startActivityForResult(intent, Companion.REQUEST_IMAGE_PICK)
         }
 
+        val subCounter = SubCounter(requireContext().applicationContext)
+
         binding.buttonSend.setOnClickListener{
             val carName = binding.editTextCarName.text.toString()
             val carYear = binding.editTextYear.text.toString().toIntOrNull()
             val car = Car(carName = carName, year = carYear!!, photo = image, engineCapacity = 1.1f, dateAdded = System.currentTimeMillis() )
             addCarToDatabase(car)
+            subCounter.incrementAddCount()
+            Log.e("Count", subCounter.getAddCount().toString())
         }
 
         return binding.root

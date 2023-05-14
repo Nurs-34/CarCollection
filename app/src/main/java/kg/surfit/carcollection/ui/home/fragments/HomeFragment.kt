@@ -14,6 +14,7 @@ import kg.surfit.carcollection.ui.home.adapters.HomeRecyclerViewAdapter
 import kg.surfit.carcollection.R
 import kg.surfit.carcollection.db.AppDatabase
 import kg.surfit.carcollection.db.entity.Car
+import kg.surfit.carcollection.utils.SubCounter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -37,6 +38,10 @@ class HomeFragment : Fragment() {
 //                carDao.insertCar(car)
 //            }
 //        }
+
+        val subCounter = SubCounter(requireContext().applicationContext)
+        var addCounter = subCounter.getAddCount()
+        Log.e("Count", addCounter.toString())
 
 
 
