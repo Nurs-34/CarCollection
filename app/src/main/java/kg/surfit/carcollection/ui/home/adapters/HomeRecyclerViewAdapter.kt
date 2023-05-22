@@ -1,14 +1,11 @@
 package kg.surfit.carcollection.ui.home.adapters
 
-import android.net.Uri
-import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import com.squareup.picasso.Picasso
 import kg.surfit.carcollection.databinding.FragmentItemBinding
 
 import kg.surfit.carcollection.placeholder.PlaceholderContent.PlaceholderItem
@@ -19,7 +16,7 @@ import kg.surfit.carcollection.db.entity.Car
  * TODO: Replace the implementation with code for your data type.
  */
 class HomeRecyclerViewAdapter(
-    private val values: List<Car>
+    private var values: List<Car>
 ) : RecyclerView.Adapter<HomeRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -50,6 +47,11 @@ class HomeRecyclerViewAdapter(
                 .load(item.photo)
                 .into(imageView)
         }
+    }
+
+    fun updateList(newList: List<Car>) {
+        values = newList
+        notifyDataSetChanged()
     }
 
 }

@@ -9,6 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioButton
+import android.widget.RadioGroup
+import android.widget.SearchView
 import androidx.lifecycle.lifecycleScope
 import kg.surfit.carcollection.ui.home.adapters.HomeRecyclerViewAdapter
 import kg.surfit.carcollection.R
@@ -25,6 +28,12 @@ import kotlinx.coroutines.withContext
 class HomeFragment : Fragment() {
 
     private var columnCount = 1
+    private lateinit var originalList: List<Car>
+    private lateinit var adapter: HomeRecyclerViewAdapter
+
+    private lateinit var sortRadioGroup: RadioGroup
+    private lateinit var radioName: RadioButton
+    private lateinit var radioYear: RadioButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +45,7 @@ class HomeFragment : Fragment() {
 //        lifecycleScope.launch {
 //            withContext(Dispatchers.IO){
 //                carDao.insertCar(car)
+//
 //            }
 //        }
 
@@ -57,6 +67,15 @@ class HomeFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
+        sortRadioGroup = view.findViewById(R.id.sortRadioGroup)
+        radioName = view.findViewById(R.id.radioName)
+        radioYear = view.findViewById(R.id.radioYear)
+
+        return view
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val recyclerView = view.findViewById<RecyclerView>(R.id.list)
         val layoutManager = when {
             columnCount <= 1 -> LinearLayoutManager(context)
@@ -67,18 +86,67 @@ class HomeFragment : Fragment() {
         val db = AppDatabase.getInstance(requireContext().applicationContext)
         val carDao = db.carDao()
 
+
         lifecycleScope.launch {
-            val cars = withContext(Dispatchers.IO){
+            var cars = withContext(Dispatchers.IO){
                 carDao.getAllCars()
             }
-            val adapter = HomeRecyclerViewAdapter(cars)
+            adapter = HomeRecyclerViewAdapter(cars)
             recyclerView.adapter = adapter
-
+            originalList = cars
         }
 
-        return view
 
+
+        val searchView: SearchView = requireView().findViewById(R.id.searchView)
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                // Не используется в данном прим
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                filterList(newText)
+                return true
+            }
+        })
+
+        sortRadioGroup.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.radioName -> sortByCarName()
+                R.id.radioYear -> sortByYear()
+            }
+        }
+
+
+
+
+        super.onViewCreated(view, savedInstanceState)
     }
+
+    private fun filterList(query: String) {
+        val filteredList = if (query.isNotEmpty()) {
+            originalList.filter { car ->
+                car.carName.contains(query, ignoreCase = true)
+            }
+        } else {
+            originalList
+        }
+        adapter.updateList(filteredList)
+    }
+
+    private fun sortByCarName() {
+        val sortedList = originalList.sortedBy { car -> car.carName }
+        adapter.updateList(sortedList)
+    }
+
+    private fun sortByYear() {
+        val sortedList = originalList.sortedBy { car -> car.year }
+        adapter.updateList(sortedList)
+    }
+
+
 
     companion object {
 
